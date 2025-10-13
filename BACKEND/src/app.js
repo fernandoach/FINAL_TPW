@@ -5,8 +5,6 @@ import { administradoresRouter } from './routes/admitradoresRouter.js'
 import { vendedoresRouter } from './routes/VendedoresRouter.js'
 import { usersRouter } from './routes/clientesRouter.js'
 import { authRouter } from './routes/authRouter.js'
-import db from '../models/index.js'
-
 
 const server = express()
 
