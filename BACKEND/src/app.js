@@ -3,7 +3,7 @@ import { globalMiddlewares } from './middlewares/globalMiddlewares.js'
 import { dotenvConfig } from './config/dotenvConfig.js'
 import { administradoresRouter } from './routes/admitradoresRouter.js'
 import { vendedoresRouter } from './routes/VendedoresRouter.js'
-import { usersRouter } from './routes/clientesRouter.js'
+import { clientesRouter } from './routes/clientesRouter.js'
 import { authRouter } from './routes/authRouter.js'
 
 const server = express()
@@ -17,9 +17,8 @@ globalMiddlewares(server)
 //routes
 server.use ('/administradores', administradoresRouter)
 server.use ('/vendedores', vendedoresRouter)
-server.use ('/user', usersRouter)
-server.use ('/', authRouter)
-
+server.use ('/clientes', clientesRouter)
+server.use ('/auth', authRouter)
 //Rutas
 
 server.get('/', (req, res) =>{
