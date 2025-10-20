@@ -116,7 +116,7 @@ clientesRouter.put('/:clientId', async (req, res) => {
          lastName,
          birthDate,
          gender,
-         password: 'Temporal1234', // Para pasar la validación del schema
+         password: 'Temporal1234',
          phone,
          email
       })
