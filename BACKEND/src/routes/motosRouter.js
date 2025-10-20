@@ -4,7 +4,7 @@ import { motoValidation } from '../Validations/motoValidation.js'
 
 export const motosRouter = Router()
 
-// 🔹 Obtener todas las motos
+//  Obtener todas las motos
 motosRouter.get('/', async (req, res) => {
   try {
     const connection = await createConnection() //  conexión a MySQL
@@ -16,7 +16,7 @@ motosRouter.get('/', async (req, res) => {
   }
 })
 
-// 🔹 Registrar una moto
+//  Registrar una moto
 motosRouter.post('/', async (req, res) => {
   try {
     const moto = req.body

@@ -19,6 +19,7 @@ server.use ('/administradores', administradoresRouter)
 server.use ('/vendedores', vendedoresRouter)
 server.use ('/user', usersRouter)
 server.use ('/', authRouter)
+server.use ('/motos', motosRouter)
 
 //Rutas
 
