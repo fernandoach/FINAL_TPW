@@ -18,7 +18,9 @@ globalMiddlewares(server)
 server.use ('/administradores', administradoresRouter)
 server.use ('/vendedores', vendedoresRouter)
 server.use ('/clientes', clientesRouter)
-server.use ('/auth', authRouter)
+server.use ('/', authRouter)
+server.use ('/motos', motosRouter)
+
 //Rutas
 
 server.get('/', (req, res) =>{
