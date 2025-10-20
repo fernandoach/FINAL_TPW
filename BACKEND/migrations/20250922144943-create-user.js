@@ -8,7 +8,7 @@ async function up(queryInterface, Sequelize) {
       primaryKey: true,
       autoIncrement: true,
     },
-    firsname: {
+    firstname: {
       type: Sequelize.STRING(50),
       allowNull: false,
     },
@@ -16,7 +16,7 @@ async function up(queryInterface, Sequelize) {
       type: Sequelize.STRING(50),
       allowNull: false,
     },
-    birthdate: {
+    birthday: {
       type: Sequelize.DATEONLY,
       allowNull: false,
     },

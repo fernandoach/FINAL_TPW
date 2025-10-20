@@ -18,7 +18,7 @@ const userModel = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    firsname: {
+    firstname: {
       type: DataTypes.STRING(50),
       allowNull: false
     },
@@ -26,7 +26,7 @@ const userModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING(50),
       allowNull: false
     },
-    birthdate: {
+    birthday: {
       type: DataTypes.DATEONLY,
       allowNull: false
     },
@@ -34,7 +34,7 @@ const userModel = (sequelize, DataTypes) => {
       type: DataTypes.CHAR(1),
       allowNull: false
     },
-    roles: {
+    role: {
       type: DataTypes.CHAR(1),
       allowNull: false
     },
