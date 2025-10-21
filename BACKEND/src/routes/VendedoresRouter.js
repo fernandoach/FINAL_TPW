@@ -2,6 +2,8 @@ import { Router } from 'express'
 import { createConnection } from '../config/dbConfig.js'
 import { vendedorValidation } from '../validation/vendedorValidation.js'
 import { hashPassword } from '../Utils/hashPassword.js' 
+import jwt from 'jsonwebtoken'
+import { authMiddlewareVeterinaryAdmin } from '../middlewares/authMiddlewares.js'
 
 const vendedoresRouter = Router()
 
@@ -44,7 +46,7 @@ vendedoresRouter.post('/', async (req, res) => {
    }
 })
 
-vendedoresRouter.get('/', async (req, res) => {
+vendedoresRouter.get('/', authMiddlewareVeterinaryAdmin, async (req, res) => {
   try {
     const connection = await createConnection()
     const search = req.query.search

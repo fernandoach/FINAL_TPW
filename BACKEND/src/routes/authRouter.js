@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { createConnection } from '../config/dbConfig.js'
 import { loginValidation } from '../validations/loginValidation.js'
+import bcrypt from 'bcrypt'
 
 const authRouter = Router()
 
@@ -16,7 +17,7 @@ authRouter.post('/login', async (req, res) => {
 
       // validar que el correo exista y traer datos
       const query = `
-         SELECT email, password 
+         SELECT idUser, email, password 
          FROM users
          WHERE email = '${email}';
       `
@@ -29,9 +30,38 @@ authRouter.post('/login', async (req, res) => {
       }
 
       //validar contrase;a... 
+      const confirmPassword = await bcrypt.compare(password, users[0].password)
+
+      if(!confirmPassword){
+         return res.status(400).json('Usuario y/o contrase;a invalidos')
+      }
+
+      // generar token jwt
+      const payload = {
+         idUser: users[0].idUser
+      }
+      const secretKey = process.env.JWT_SECRET_KEY
+      const options = {
+         algorithm: 'HS256', 
+         expiresIn: '2h'
+      }
+
+      const token = jwt.sign(payload, secretKey, options)
+
+      // guardar cookie
+      const cookieName = 'accessToken'
+      const cookieOptions = {
+         httpOnly: true,
+         secure: process.env.ENVIRONMENT === 'production',
+         sameSite: 'Strict',
+         maxAge: 2 * 60 * 60 * 1000
+      }
       
-      return res.json(`Iniciando sesión con: ${email}, ${password}`)
+      res.cookie(cookieName, token, cookieOptions)
+
+      return res.json(`Inició sesión con: ${email}`)
    } catch (error) {
+      console.log(error)
       if(error.details){
          return res.status(400).json({error: error.details[0].message})
       }else{
