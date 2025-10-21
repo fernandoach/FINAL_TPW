@@ -24,7 +24,7 @@ async function up(queryInterface, Sequelize) {
       type: Sequelize.CHAR(1),
       allowNull: false,
     },
-    roles: {
+    role: {
       type: Sequelize.CHAR(1),
       allowNull: false,
     },
