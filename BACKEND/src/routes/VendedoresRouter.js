@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { createConnection } from '../config/dbConfing.js'
+import { createConnection } from '../config/dbConfig.js'
 import { vendedorValidation } from '../validation/vendedorValidation.js'
 import { hashPassword } from '../Utils/hashPassword.js' 
 

@@ -5,6 +5,7 @@ import { administradoresRouter } from './routes/admitradoresRouter.js'
 import { vendedoresRouter } from './routes/VendedoresRouter.js'
 import { usersRouter } from './routes/clientesRouter.js'
 import { authRouter } from './routes/authRouter.js'
+import motosRouter from './routes/motosRouter.js'
 
 const server = express()
 
