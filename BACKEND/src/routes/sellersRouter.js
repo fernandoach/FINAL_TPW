@@ -9,7 +9,6 @@ const sellersRouter = Router()
 // Registrar vendedor
 sellersRouter.post('/', sellersRegisterController)
 
-// TODO: MODULARIZAR
 // listar y buscar vendedores
 sellersRouter.get('/', sellerListarController)
 

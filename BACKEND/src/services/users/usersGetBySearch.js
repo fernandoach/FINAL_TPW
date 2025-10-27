@@ -1,16 +1,17 @@
 import { createConnection } from '../../config/dbConfig.js'
 
 async function usersGetBySearch (search) {
-  const connection = await createConnection()
+  try {
+    const connection = await createConnection()
 
-  let query = `
+    let query = `
     SELECT idUser, firstname, lastname, gender, role, birthday, email, phone, createdAt, updatedAt
     FROM users
     WHERE role = 'S'
   `
 
-  if (search) {
-    query += `
+    if (search) {
+      query += `
       AND (
         firstname LIKE '%${search}%' OR
         lastname LIKE '%${search}%' OR
@@ -21,10 +22,13 @@ async function usersGetBySearch (search) {
         phone LIKE '%${search}%'
       )
     `
-  }
+    }
 
-  const [vendedores] = await connection.query(query)
-  return vendedores
+    const [vendedores] = await connection.query(query)
+    return vendedores
+  } catch (error) {
+    throw new Error(error)
+  }
 }
 
 export { usersGetBySearch }
