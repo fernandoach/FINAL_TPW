@@ -1,7 +1,7 @@
 import { config } from 'dotenv'
 
-function dotenvConfig(){
-   config()
+function dotenvConfig () {
+  config()
 }
 
 export { dotenvConfig }
