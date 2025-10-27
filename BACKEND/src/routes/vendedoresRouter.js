@@ -3,8 +3,6 @@ import { sellersEditarController } from '../controllers/sellersEditarController.
 
 const router = Router()
 
-// Editar vendedor
 router.put('/:idVendedor', sellersEditarController)
 
-// Exportar router
 export { router as vendedoresRouter }
