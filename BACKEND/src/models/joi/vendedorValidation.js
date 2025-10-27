@@ -108,4 +108,4 @@ const vendedorValidation = joi.object({
     })
 })
 
-export { vendedorValidation }
+export { vendedorValidation };
