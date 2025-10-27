@@ -33,13 +33,13 @@ const vendedorValidation = joi.object({
     .valid('M', 'F')
     .required()
     .messages({
-      'any.only': 'El género debe ser M u F',
+      'any.only': 'El género debe ser M o F',
       'any.required': 'El género es requerido'
     }),
 
   role: joi.string()
     .required()
-    .valid('A', 'S', 'C') // A=Admin, S=Seller, C=Custommer
+    .valid('A', 'V', 'U')
     .length(1)
     .messages({
       'any.only': 'El rol debe ser A (Admin), V (Vendedor) o U (Usuario)',
@@ -92,18 +92,19 @@ const vendedorValidation = joi.object({
     .max(32)
     .pattern(/^(?=(.*[A-Z]))(?=(.*\d.*\d)).+$/)
     .messages({
-      'string.base': 'La contraseña de ser una cadena de caracteres',
-      'string.empty': 'La contraseña no puede estar vacia',
-      'string.min': 'La contraseña debe contener minimo 8 caracteres',
+      'string.base': 'La contraseña debe ser una cadena de caracteres',
+      'string.empty': 'La contraseña no puede estar vacía',
+      'string.min': 'La contraseña debe contener mínimo 8 caracteres',
       'string.max': 'La contraseña solo puede contener máximo 32 caracteres',
-      'string.pattern.base': 'La contraseña debe contar con mínimo una letra mayuscula y dos números',
+      'string.pattern.base': 'La contraseña debe contar con mínimo una letra mayúscula y dos números',
       'any.required': 'La contraseña es requerida'
     }),
+
   repassword: joi.any()
     .valid(joi.ref('password'))
     .required()
     .messages({
-      'any.only': 'Las contraseñas no coiciden',
+      'any.only': 'Las contraseñas no coinciden',
       'any.required': 'Repetir contraseña es requerido'
     })
 })
