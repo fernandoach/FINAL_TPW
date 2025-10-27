@@ -39,7 +39,7 @@ const vendedorValidation = joi.object({
 
   role: joi.string()
     .required()
-    .valid('A', 'V', 'U') // A=Admin, V=Vendedor, U=Usuario (puedes ajustar)
+    .valid('A', 'S', 'C') // A=Admin, S=Seller, C=Custommer
     .length(1)
     .messages({
       'any.only': 'El rol debe ser A (Admin), V (Vendedor) o U (Usuario)',
@@ -47,7 +47,7 @@ const vendedorValidation = joi.object({
       'any.required': 'El rol es requerido'
     }),
 
-   birthday: joi.string()
+  birthday: joi.string()
     .pattern(/^\d{4}-\d{2}-\d{2}$/)
     .required()
     .custom((value, helpers) => {

@@ -2,37 +2,37 @@ import express from 'express'
 import { globalMiddlewares } from './middlewares/globalMiddlewares.js'
 import { dotenvConfig } from './config/dotenvConfig.js'
 import { administradoresRouter } from './routes/admitradoresRouter.js'
-import { vendedoresRouter } from './routes/VendedoresRouter.js'
 import { usersRouter } from './routes/clientesRouter.js'
 import { authRouter } from './routes/authRouter.js'
 import motosRouter from './routes/motosRouter.js'
+import { sellersRouter } from './routes/sellersRouter.js'
 
 const server = express()
 
-//configs
+// configs
 dotenvConfig()
 
-//middlewares
+// middlewares
 globalMiddlewares(server)
 
-//routes
-server.use ('/administradores', administradoresRouter)
-server.use ('/vendedores', vendedoresRouter)
-server.use ('/user', usersRouter)
-server.use ('/', authRouter)
-server.use ('/motos', motosRouter)
+// routes
+server.use('/', authRouter)
+server.use('/sellers', sellersRouter)
+server.use('/admins', administradoresRouter)
+server.use('/users', usersRouter)
+server.use('/motorcycles', motosRouter)
 
-//Rutas
+// Rutas
 
-server.get('/', (req, res) =>{
-    return res.json('HOLA MUNDO...')
+server.get('/', (req, res) => {
+  return res.json('HOLA MUNDO...')
 })
 
-//Server on listen
+// Server on listen
 const port = process.env.API_PORT || 3000
 const domain = process.env.API_DOMAIN || 'localhost'
 const protocol = process.env.API_PROTOCOL || 'http'
 
-server.listen(3000, () =>{
-    console.log(`Servidor ejecutandose en: ${protocol}://${domain}:${port}`)
+server.listen(3000, () => {
+  console.log(`Servidor ejecutandose en: ${protocol}://${domain}:${port}`)
 })

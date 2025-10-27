@@ -1,52 +1,17 @@
 import { Router } from 'express'
 import { createConnection } from '../config/dbConfig.js'
-import { vendedorValidation } from '../validation/vendedorValidation.js'
-import { hashPassword } from '../Utils/hashPassword.js' 
-import jwt from 'jsonwebtoken'
+import { vendedorValidation } from '../models/joi/vendedorValidation.js'
 import { authMiddlewareVeterinaryAdmin } from '../middlewares/authMiddlewares.js'
+import { sellersRegisterController } from '../controllers/sellersRegisterController.js'
 
-const vendedoresRouter = Router()
+const sellersRouter = Router()
 
 // Registrar vendedor
-vendedoresRouter.post('/', async (req, res) => {
-   try {
-      const { firstname, lastname, gender, role, birthday, email, phone, password, repassword } = req.body
-      await vendedorValidation.validateAsync({ firstname, lastname, gender, role, birthday, email, phone, password, repassword })
+sellersRouter.post('/', sellersRegisterController)
 
-      const connection = await createConnection()
-
-      const checkQuery = `
-         SELECT email 
-         FROM users
-         WHERE email = '${email}';
-      `
-      const checkResult = await connection.query(checkQuery)
-      const vendedores = checkResult[0]
-
-      if (vendedores.length > 0) {
-         return res.status(400).json('El correo ya se encuentra registrado.')
-      }
-
-      const hashedPassword = await hashPassword(password)
-
-      const insertQuery = `
-         INSERT INTO users (firstname, lastname, gender, role, birthday, email, phone, password, createdAt, updatedAt)
-         VALUES ('${firstname}', '${lastname}', '${gender}', '${role}', '${birthday}', '${email}', '${phone}', '${hashedPassword}', NOW(), NOW());
-      `
-      await connection.query(insertQuery)
-
-      return res.json(`Vendedor ${firstname} ${lastname} registrado correctamente.`)
-
-   } catch (error) {
-      if (error.details) {
-         return res.status(400).json({ error: error.details[0].message })
-      } else {
-         return res.status(400).json(error.message)
-      }
-   }
-})
-
-vendedoresRouter.get('/', authMiddlewareVeterinaryAdmin, async (req, res) => {
+// TODO: MODULARIZAR
+// listar y buscar vendedores
+sellersRouter.get('/', authMiddlewareVeterinaryAdmin, async (req, res) => {
   try {
     const connection = await createConnection()
     const search = req.query.search
@@ -81,10 +46,9 @@ vendedoresRouter.get('/', authMiddlewareVeterinaryAdmin, async (req, res) => {
   }
 })
 
-
-
+// TODO: MODULARIZAR
 // Ver detalles de un vendedor
-vendedoresRouter.get('/:idVendedor', async (req, res) => {
+sellersRouter.get('/:idVendedor', async (req, res) => {
   try {
     const idVendedor = req.params.idVendedor
     const connection = await createConnection()
@@ -96,7 +60,6 @@ vendedoresRouter.get('/:idVendedor', async (req, res) => {
       [idVendedor]
     )
 
-  
     if (vendedor.length === 0) {
       return res.status(404).json({ error: 'Vendedor no encontrado.' })
     }
@@ -107,9 +70,9 @@ vendedoresRouter.get('/:idVendedor', async (req, res) => {
   }
 })
 
-
+// TODO: MODULARIZAR
 // Editar vendedor
-vendedoresRouter.put('/:idVendedor', async (req, res) => {
+sellersRouter.put('/:idVendedor', async (req, res) => {
   try {
     const idVendedor = req.params.idVendedor
     const { firstname, lastname, gender, role, birthday, email, phone } = req.body
@@ -122,14 +85,14 @@ vendedoresRouter.put('/:idVendedor', async (req, res) => {
       birthday,
       email,
       phone,
-      password: 'Temporal123_', 
-      repassword: 'Temporal123_' 
+      password: 'Temporal123_',
+      repassword: 'Temporal123_'
     })
 
     const connection = await createConnection()
 
     const [existing] = await connection.query(
-      `SELECT * FROM users WHERE idUser = ?`,
+      'SELECT * FROM users WHERE idUser = ?',
       [idVendedor]
     )
 
@@ -172,9 +135,9 @@ vendedoresRouter.put('/:idVendedor', async (req, res) => {
   }
 })
 
-
+// TODO: MODULARIZAR
 // Eliminar vendedor
-vendedoresRouter.delete('/:idVendedor', async (req, res) => {
+sellersRouter.delete('/:idVendedor', async (req, res) => {
   try {
     const idVendedor = req.params.idVendedor
     const connection = await createConnection()
@@ -198,11 +161,9 @@ vendedoresRouter.delete('/:idVendedor', async (req, res) => {
     } else {
       return res.status(400).json({ error: 'No se pudo eliminar el vendedor.' })
     }
-
   } catch (error) {
     return res.status(500).json({ error: error.message })
   }
 })
 
-
-export { vendedoresRouter }
+export { sellersRouter }
