@@ -3,7 +3,7 @@ import { createConnection } from '../config/dbConfig.js'
 import { vendedorValidation } from '../models/joi/vendedorValidation.js'
 import { sellersRegisterController } from '../controllers/sellersRegisterController.js'
 import { sellerListarController } from '../controllers/sellersListarController.js'
-import { sellersgetDetailController } from '../controllers/sellersgetDetailController.js'
+import { sellersGetDetailsByIdController } from '../controllers/sellersGetDetailsByIdController.js'
 
 const sellersRouter = Router()
 
@@ -13,9 +13,8 @@ sellersRouter.post('/', sellersRegisterController)
 // listar y buscar vendedores
 sellersRouter.get('/', sellerListarController)
 
-// TODO: MODULARIZAR
 // Ver detalles de un vendedor
-sellersRouter.get('/:idVendedor', sellersgetDetailController
+sellersRouter.get('/:idVendedor', sellersGetDetailsByIdController)
 
 // TODO: MODULARIZAR
 // Editar vendedor
