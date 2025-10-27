@@ -1,50 +1,16 @@
 import { Router } from 'express'
 import { createConnection } from '../config/dbConfig.js'
 import { vendedorValidation } from '../models/joi/vendedorValidation.js'
-import { authMiddlewareVeterinaryAdmin } from '../middlewares/authMiddlewares.js'
 import { sellersRegisterController } from '../controllers/sellersRegisterController.js'
+import { sellerListarController } from '../controllers/sellersListarController.js'
 
 const sellersRouter = Router()
 
 // Registrar vendedor
 sellersRouter.post('/', sellersRegisterController)
 
-// TODO: MODULARIZAR
 // listar y buscar vendedores
-sellersRouter.get('/', authMiddlewareVeterinaryAdmin, async (req, res) => {
-  try {
-    const connection = await createConnection()
-    const search = req.query.search
-
-    let query = `
-      SELECT idUser, firstname, lastname, gender, role, birthday, email, phone, createdAt, updatedAt
-      FROM users
-      WHERE role = 'V'
-    `
-    if (search) {
-      query += `
-        AND (
-          firstname LIKE '%${search}%' OR
-          lastname LIKE '%${search}%' OR
-          gender LIKE '%${search}%' OR
-          role LIKE '%${search}%' OR
-          birthday LIKE '%${search}%' OR
-          email LIKE '%${search}%' OR
-          phone LIKE '%${search}%'
-        )
-      `
-    }
-
-    const [vendedores] = await connection.query(query)
-
-    if (vendedores.length === 0) {
-      return res.status(404).json({ message: 'No se encontraron vendedores.' })
-    }
-    return res.json(vendedores)
-  } catch (error) {
-    return res.status(400).json({ error: error.message })
-  }
-})
+sellersRouter.get('/', sellerListarController)
 
 // TODO: MODULARIZAR
 // Ver detalles de un vendedor
