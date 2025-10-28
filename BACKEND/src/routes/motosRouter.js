@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { createConnection } from '../config/dbConfig.js'
 import { motoValidation } from '../Validations/motoValidation.js'
+import { updateMotorbikeController } from '../controllers/updateMotorbikeController.js'
 
 export const motosRouter = Router()
 
@@ -69,26 +70,7 @@ motosRouter.get('/:idMoto', async (req, res) => {
 })
 
 //  Actualizar una moto
-motosRouter.put('/:idMoto', async (req, res) => {
-  try {
-    const { idMoto } = req.params
-    const moto = req.body
-
-    const connection = await createConnection()
-
-    const updates = Object.entries(moto)
-      .map(([key, value]) => `${key} = ?`)
-      .join(', ')
-    const values = Object.values(moto)
-
-    const query = `UPDATE motos SET ${updates} WHERE idMoto = ?`
-    await connection.query(query, [...values, idMoto])
-
-    res.status(200).json({ mensaje: `Moto con ID ${idMoto} actualizada correctamente`, datos: moto })
-  } catch (error) {
-    res.status(500).json({ mensaje: 'Error al actualizar la moto', error: error.message })
-  }
-})
+motosRouter.put('/:idMotorbike', updateMotorbikeController)
 
 //  Eliminar una moto
 motosRouter.delete('/:idMoto', async (req, res) => {
