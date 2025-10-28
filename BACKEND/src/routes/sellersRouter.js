@@ -1,88 +1,22 @@
 import { Router } from 'express'
-import { createConnection } from '../config/dbConfig.js'
-import { vendedorValidation } from '../models/joi/vendedorValidation.js'
 import { sellersRegisterController } from '../controllers/sellersRegisterController.js'
 import { sellerListarController } from '../controllers/sellersListarController.js'
-import { sellersgetDetailController } from '../controllers/sellersgetDetailController.js'
-
+import { sellersGetDetailsByIdController } from '../controllers/sellersGetDetailsByIdController.js'
+import { sellersEditarController } from '../controllers/sellersEditarControllers.js'
 const sellersRouter = Router()
 
 // Registrar vendedor
 sellersRouter.post('/', sellersRegisterController)
 
-// listar y buscar vendedores
+// Listar y buscar vendedores
 sellersRouter.get('/', sellerListarController)
 
-// TODO: MODULARIZAR
 // Ver detalles de un vendedor
-sellersRouter.get('/:idVendedor', sellersgetDetailController
+sellersRouter.get('/:idVendedor', sellersGetDetailsByIdController)
 
-// TODO: MODULARIZAR
 // Editar vendedor
-sellersRouter.put('/:idVendedor', async (req, res) => {
-  try {
-    const idVendedor = req.params.idVendedor
-    const { firstname, lastname, gender, role, birthday, email, phone } = req.body
+sellersRouter.put('/:idVendedor', sellersEditarController)
 
-    await vendedorValidation.validateAsync({
-      firstname,
-      lastname,
-      gender,
-      role,
-      birthday,
-      email,
-      phone,
-      password: 'Temporal123_',
-      repassword: 'Temporal123_'
-    })
-
-    const connection = await createConnection()
-
-    const [existing] = await connection.query(
-      'SELECT * FROM users WHERE idUser = ?',
-      [idVendedor]
-    )
-
-    if (existing.length === 0) {
-      return res.status(404).json({ error: 'Vendedor no encontrado.' })
-    }
-
-    const updateQuery = `
-      UPDATE users
-      SET
-        firstname = ?,
-        lastname = ?,
-        gender = ?,
-        role = ?,
-        birthday = ?,
-        email = ?,
-        phone = ?,
-        updatedAt = NOW()
-      WHERE idUser = ?;
-    `
-
-    await connection.query(updateQuery, [
-      firstname,
-      lastname,
-      gender,
-      role,
-      birthday,
-      email,
-      phone,
-      idVendedor
-    ])
-
-    return res.json(`Vendedor con ID ${idVendedor} actualizado correctamente.`)
-  } catch (error) {
-    if (error.details) {
-      return res.status(400).json({ error: error.details[0].message })
-    } else {
-      return res.status(400).json({ error: error.message })
-    }
-  }
-})
-
-// TODO: MODULARIZAR
 // Eliminar vendedor
 sellersRouter.delete('/:idVendedor', async (req, res) => {
   try {

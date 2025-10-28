@@ -1,47 +1,20 @@
 import { Router } from 'express'
 import { createConnection } from '../config/dbConfig.js'
+
 import { motoValidation } from '../Validations/motoValidation.js'
 import { motosBikersListControllers } from '../controllers/motosBikersListControllers.js'
+=======
+import { motosRegistrarController } from '../controllers/motosRegistrarController.js'
+
 export const motosRouter = Router()
 
 //  Obtener todas las motos
 motosRouter.get('/', motosBikersListControllers)
 
 
-//  Registrar una moto
-motosRouter.post('/', async (req, res) => {
-  try {
-    const moto = req.body
+// Registrar una moto
+motosRouter.post('/', motosRegistrarController)
 
-    //  Validar datos antes de insertar
-    await motoValidation.validateAsync(moto)
-
-    const connection = await createConnection()
-
-    const query = `
-      INSERT INTO motos (
-        marca, modelo, precio_dolares, precio_soles, cilindrada, caballos,
-        cilindrosMotor, valvulasMotor, revoluciones, tiemposMotor, descripcion,
-        descripcionDiseno, descripcionSeguridad, descripcionTecnologia, proposito,
-        capacidadTanque, velocidades, imgModelo, imgMotor, imgDiseno, imgSeguridad, imgDescripcion
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `
-
-    const values = [
-      moto.marca, moto.modelo, moto.precio_dolares, moto.precio_soles, moto.cilindrada, moto.caballos,
-      moto.cilindrosMotor, moto.valvulasMotor, moto.revoluciones, moto.tiemposMotor, moto.descripcion,
-      moto.descripcionDiseno, moto.descripcionSeguridad, moto.descripcionTecnologia, moto.proposito,
-      moto.capacidadTanque, moto.velocidades, moto.imgModelo, moto.imgMotor, moto.imgDiseno,
-      moto.imgSeguridad, moto.imgDescripcion
-    ]
-
-    await connection.query(query, values)
-
-    res.status(201).json({ mensaje: 'Moto registrada correctamente', datos: moto })
-  } catch (error) {
-    res.status(500).json({ mensaje: 'Error al registrar la moto', error: error.message })
-  }
-})
 
 //  Obtener una moto por ID
 motosRouter.get('/:idMoto', async (req, res) => {
