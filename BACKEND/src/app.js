@@ -6,7 +6,6 @@ import { usersRouter } from './routes/clientesRouter.js'
 import { authRouter } from './routes/authRouter.js'
 import motosRouter from './routes/motosRouter.js'
 import { sellersRouter } from './routes/sellersRouter.js'
-import { vendedoresRouter } from './routes/vendedoresRouter.js'
 
 
 const server = express()
@@ -23,7 +22,6 @@ server.use('/sellers', sellersRouter)
 server.use('/admins', administradoresRouter)
 server.use('/users', usersRouter)
 server.use('/motorcycles', motosRouter)
-server.use('/vendedores', vendedoresRouter)
 
 // Rutas
 
