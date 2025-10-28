@@ -1,19 +1,16 @@
 import { Router } from 'express'
 import { createConnection } from '../config/dbConfig.js'
+
+import { motoValidation } from '../Validations/motoValidation.js'
+import { motosBikersListControllers } from '../controllers/motosBikersListControllers.js'
+=======
 import { motosRegistrarController } from '../controllers/motosRegistrarController.js'
+
 export const motosRouter = Router()
 
 //  Obtener todas las motos
-motosRouter.get('/', async (req, res) => {
-  try {
-    const connection = await createConnection() //  conexión a MySQL
-    const [rows] = await connection.query('SELECT * FROM motos') //  consulta
+motosRouter.get('/', motosBikersListControllers)
 
-    res.status(200).json({ mensaje: 'Listado de motos obtenido correctamente', datos: rows })
-  } catch (error) {
-    res.status(500).json({ mensaje: 'Error al obtener las motos', error: error.message })
-  }
-})
 
 // Registrar una moto
 motosRouter.post('/', motosRegistrarController)
