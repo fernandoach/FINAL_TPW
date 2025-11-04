@@ -17,11 +17,18 @@ function HomePage(){
 
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzcWWR0pLv8gvuByNtAp9sQDmJwrGsTBDZRQ&s" alt="Yamaha" className="h-15"/>
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKsXRicLzFfUw7tjEEdMEtMT-hPpz3meFZ8Q&s" alt="Kawasaki" className="h-15"/>
+  </div>
   </div> 
-  </div>
-  </div>
-  </section>
-  )
+    </div>
+      <div className="flex-1 flex justify-center md:justify-end">
+        <img
+          src="https://i.postimg.cc/MTVW1dR5/pngwing-com.png"
+          alt="Moto"
+          className="w-full max-w-[900px] drop-shadow-2xl"
+        />
+      </div>
+    </section>
+  );
 }
 
 export { HomePage }
