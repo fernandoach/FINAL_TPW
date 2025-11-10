@@ -15,13 +15,13 @@ async function loginController (req, res) {
     const queryResult = await usersGetCredentialsByEmail(email)
     const users = queryResult[0]
     if (users.length === 0) {
-      return res.status(400).json('Usuario y/o contrase;a invalidos')
+      return res.status(400).json({ message: 'Usuario y/o contraseña invalidos' })
     }
 
     // validar contrase;a...
     const confirmPassword = await bcrypt.compare(password, users[0].password)
     if (!confirmPassword) {
-      return res.status(400).json('Usuario y/o contrase;a invalidos')
+      return res.status(400).json({ message: 'Usuario y/o contraseña invalidos' })
     }
 
     // generar token jwt
@@ -30,13 +30,9 @@ async function loginController (req, res) {
     // guardar cookie
     res.cookie(cookieName, token, cookieOptions)
 
-    return res.json(`Inició sesión con: ${email}`)
+    return res.json({ message: 'Inició sesión con exito' })
   } catch (error) {
-    if (error.details) {
-      return res.status(400).json({ error: error.details[0].message })
-    } else {
-      return res.status(400).json({ error: error.message })
-    }
+    return res.status(400).json({ message: 'Usuario y/o contraseña invalidos' })
   }
 };
 

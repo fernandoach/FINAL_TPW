@@ -7,7 +7,6 @@ import { authRouter } from './routes/authRouter.js'
 import motosRouter from './routes/motosRouter.js'
 import { sellersRouter } from './routes/sellersRouter.js'
 
-
 const server = express()
 
 // configs

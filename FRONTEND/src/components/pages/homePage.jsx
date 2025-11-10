@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function HomePage(){
   return(
   <section className="w-full flex items-center justify-between px-16 py-10 from-[#ffe5d1] ">
@@ -8,7 +10,7 @@ function HomePage(){
     <p className="text-gray-600">Tienda especializadas en motos de calidad, con variedad de modelos, precios justos y en mejor servicio para que disfrutes la libertad sobre dos ruedas. </p>
   <div className="flex gap-4 mt-3 ">
     <button className="bg-white shadow-md px-6 py-3 rounded-full font-medium hover:scale-150 transition">¡REGISTRARSE GRATIS!</button>
-    <button className="bg-orange-500 shadow-md px-6 py-3 rounded-full font-medium hover:bg-orange-600 transition">INICIAR SESION</button>
+    <Link to={'/login'} className="bg-orange-500 shadow-md px-6 py-3 rounded-full font-medium hover:bg-orange-600 transition">INICIAR SESION</Link>
   </div>
   <div className="mt-4 pl-20">
     <div className=" grid grid-cols-2 gap-4 mt-6 opacity-80 w-40">
