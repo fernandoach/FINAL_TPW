@@ -9,7 +9,7 @@ function HomePage(){
     </h1>
     <p className="text-gray-600">Tienda especializadas en motos de calidad, con variedad de modelos, precios justos y en mejor servicio para que disfrutes la libertad sobre dos ruedas. </p>
   <div className="flex gap-4 mt-3 ">
-    <button className="bg-white shadow-md px-6 py-3 rounded-full font-medium hover:scale-150 transition">¡REGISTRARSE GRATIS!</button>
+    <Link to={'/register'} className="bg-white shadow-md px-6 py-3 rounded-full font-medium hover:scale-150 transition">¡REGISTRARSE GRATIS!</Link>
     <Link to={'/login'} className="bg-orange-500 shadow-md px-6 py-3 rounded-full font-medium hover:bg-orange-600 transition">INICIAR SESION</Link>
   </div>
   <div className="mt-4 pl-20">
